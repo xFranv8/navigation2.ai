@@ -1,0 +1,23 @@
+{
+  "name": "Nav2 Depth Costmap Development",
+  "dockerComposeFile": "../docker/docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/ros2_ws/navigation2.ai",
+  "remoteUser": "${localEnv:USER}",
+  "build.args": {
+      "UID": "${localEnv:UID}",
+      "USER": "${localEnv:USER}"
+  },
+  "containerUser": "${localEnv:USER}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "ms-iotcommunity.vscode-ros"
+      ]
+    }
+  },
+  "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths . --ignore-src -r -y"
+}

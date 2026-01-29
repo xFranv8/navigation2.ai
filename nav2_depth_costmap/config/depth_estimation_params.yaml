@@ -1,0 +1,27 @@
+depth_estimation_node:
+  ros__parameters:
+    # Path to ONNX model file (required)
+    model_path: ""
+
+    # Input topics
+    image_topic: "/camera/image_raw"
+    camera_info_topic: "/camera/camera_info"
+
+    # Output topics
+    depth_image_topic: "/depth_estimation/depth"
+    pointcloud_topic: "/depth_estimation/points"
+
+    # Model configuration
+    model_input_width: 518   # Depth Anything V2 default input size
+    model_input_height: 518
+
+    # Depth configuration
+    min_depth: 0.1           # Minimum depth in meters (filter out closer)
+    max_depth: 10.0          # Maximum depth in meters (filter out farther)
+    depth_scale: 10.0        # Scale factor: relative depth [0,1] -> metric depth [0, depth_scale]
+
+    # Hardware acceleration
+    use_gpu: true            # Use CUDA if available
+
+    # Debug options
+    publish_depth_image: true  # Publish depth image for visualization

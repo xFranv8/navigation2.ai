@@ -1,0 +1,35 @@
+services:
+  dev:
+    build:
+      dockerfile: docker/Dockerfile
+      context: ..
+      args:
+        UID: ${UID:-1000}
+        USER: ${USER}
+    image: nav2_depth_costmap
+    container_name: nav2_depth_costmap
+    hostname: nav2_depth_costmap
+    stdin_open: true
+    tty: true
+    entrypoint: ["/bin/bash"]
+    runtime: nvidia
+    environment:
+      - ACCEPT_EULA=Y
+      - DISPLAY
+      - FASTDDS_BUILTIN_TRANSPORTS=SHM
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - OMNI_KIT_ACCEPT_EULA=Y
+      - PRIVACY_CONSENT=Y
+      - QT_X11_NO_MITSHM=1
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - XAUTHORITY=/tmp/.docker.xauth
+    volumes:
+      - ../:/ros2_ws/navigation2.ai
+      - /tmp/.docker.xauth:/tmp/.docker.xauth
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/video2:/dev/video2
+      - /dev/video3:/dev/video3
