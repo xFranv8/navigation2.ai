@@ -41,7 +41,7 @@ include_directories(
 
 # Library with all core components
 add_library(${PROJECT_NAME} SHARED
-  src/nav2_depth_costmap/depth_model/OnnxDepthModel.cpp
+  src/nav2_depth_costmap/depth_model/DepthAnythingV2.cpp
   src/nav2_depth_costmap/ImagePreprocessor.cpp
   src/nav2_depth_costmap/PointCloudGenerator.cpp
   src/nav2_depth_costmap/DepthEstimationNode.cpp

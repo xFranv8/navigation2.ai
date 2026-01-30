@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "nav2_depth_costmap/depth_model/OnnxDepthModel.hpp"
-
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
 
+#include "nav2_depth_costmap/depth_model/DepthAnythingV2.hpp"
+
 namespace nav2_depth_costmap
 {
 
-OnnxDepthModel::OnnxDepthModel(int input_width, int input_height, bool use_gpu)
+DepthAnythingV2::DepthAnythingV2(int input_width, int input_height, bool use_gpu)
 : input_width_(input_width),
   input_height_(input_height),
   use_gpu_(use_gpu),
   is_ready_(false),
-  model_name_("OnnxDepthModel") {
+  model_name_("DepthAnythingV2") {
 }
 
-bool OnnxDepthModel::load(const std::string & model_path) {
+bool DepthAnythingV2::load(const std::string & model_path) {
   try {
     // Create ONNX Runtime environment
     env_ = std::make_unique<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "DepthEstimation");
@@ -102,11 +102,11 @@ bool OnnxDepthModel::load(const std::string & model_path) {
   }
 }
 
-bool OnnxDepthModel::isReady() const {
+bool DepthAnythingV2::isReady() const {
   return is_ready_;
 }
 
-cv::Mat OnnxDepthModel::infer(const cv::Mat & rgb_image) {
+cv::Mat DepthAnythingV2::infer(const cv::Mat & rgb_image) {
   if (!is_ready_) {
     throw std::runtime_error("Model not loaded");
   }
@@ -158,15 +158,15 @@ cv::Mat OnnxDepthModel::infer(const cv::Mat & rgb_image) {
   return postprocess(output_data, output_height, output_width, original_size);
 }
 
-cv::Size OnnxDepthModel::getInputSize() const {
+cv::Size DepthAnythingV2::getInputSize() const {
   return cv::Size(input_width_, input_height_);
 }
 
-std::string OnnxDepthModel::getName() const {
+std::string DepthAnythingV2::getName() const {
   return model_name_;
 }
 
-std::vector<float> OnnxDepthModel::preprocess(const cv::Mat & image) {
+std::vector<float> DepthAnythingV2::preprocess(const cv::Mat & image) {
   cv::Mat rgb;
   if (image.channels() == 3) {
     cv::cvtColor(image, rgb, cv::COLOR_BGR2RGB);
@@ -200,7 +200,7 @@ std::vector<float> OnnxDepthModel::preprocess(const cv::Mat & image) {
   return tensor_data;
 }
 
-cv::Mat OnnxDepthModel::postprocess(
+cv::Mat DepthAnythingV2::postprocess(
   const float * output_data,
   int output_height, int output_width,
   const cv::Size & original_size) {

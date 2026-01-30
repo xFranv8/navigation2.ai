@@ -148,14 +148,31 @@ ros2 run usb_cam usb_cam_node_exe --ros-args \
     -p video_device:=/dev/video0 \
     -r image_raw:=/image_raw
 
-# Terminal 2: Start depth estimation
+# Terminal 2: Publish TF transform (required for point cloud visualization)
+python3 nav2_depth_costmap/scripts/publish_camera_info.py
+
+# Terminal 3: Start depth estimation
 ros2 launch nav2_depth_costmap depth_estimation.launch.py \
     model_path:=$(pwd)/model.onnx \
     image_topic:=/image_raw
 
-# Terminal 3: Visualize
+# Terminal 4: Visualize
 rviz2
 ```
+
+### TF Setup
+
+The point cloud requires a valid TF transform from your fixed frame (e.g., `map`) to the camera frame. The package includes a helper script for testing:
+
+```bash
+python3 nav2_depth_costmap/scripts/publish_camera_info.py
+```
+
+This script publishes:
+- **Static TF**: `map` → `default_cam` transform (camera at 1m height)
+- **CameraInfo**: Basic camera intrinsics to `/camera/camera_info`
+
+> **Note**: For production use, replace this with your robot's actual TF tree and calibrated camera intrinsics. You can calibrate your camera using the [camera_calibration](http://wiki.ros.org/camera_calibration) package.
 
 ### Launch Arguments
 
@@ -271,6 +288,6 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📬 Contact
 
-- **Author**: xfranv8
+- **Author**: Francisco C. Vázquez
 - **Repository**: [github.com/xFranv8/navigation2.ai](https://github.com/xFranv8/navigation2.ai)
 - **Issues**: [Bug Reports](https://github.com/xFranv8/navigation2.ai/issues)

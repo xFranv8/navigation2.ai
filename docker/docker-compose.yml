@@ -28,8 +28,6 @@ services:
       - ../:/ros2_ws/navigation2.ai
       - /tmp/.docker.xauth:/tmp/.docker.xauth
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    devices:
-      - /dev/video0:/dev/video0
-      - /dev/video1:/dev/video1
-      - /dev/video2:/dev/video2
-      - /dev/video3:/dev/video3
+      - /dev:/dev
+    device_cgroup_rules:
+      - 'c 81:* rmw'

@@ -16,6 +16,7 @@
 #define NAV2_DEPTH_COSTMAP__DEPTH_MODEL__DEPTHMODEL_HPP_
 
 #include <string>
+
 #include <opencv2/opencv.hpp>
 
 namespace nav2_depth_costmap

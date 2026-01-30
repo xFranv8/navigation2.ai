@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "nav2_depth_costmap/DepthEstimationNode.hpp"
-#include "nav2_depth_costmap/depth_model/OnnxDepthModel.hpp"
+#include "nav2_depth_costmap/depth_model/DepthAnythingV2.hpp"
 
 #include <cv_bridge/cv_bridge.h>
 
@@ -67,7 +67,7 @@ void DepthEstimationNode::declare_parameters() {
 
 void DepthEstimationNode::initialize_model() {
   // Create depth model
-  depth_model_ = std::make_unique<OnnxDepthModel>(
+  depth_model_ = std::make_unique<DepthAnythingV2>(
     model_input_width_, model_input_height_, use_gpu_);
 
   if (!depth_model_->load(model_path_)) {

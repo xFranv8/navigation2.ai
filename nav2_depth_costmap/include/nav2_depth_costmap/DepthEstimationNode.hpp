@@ -18,14 +18,14 @@
 #include <memory>
 #include <string>
 
+#include "nav2_depth_costmap/depth_model/DepthModel.hpp"
+#include "nav2_depth_costmap/ImagePreprocessor.hpp"
+#include "nav2_depth_costmap/PointCloudGenerator.hpp"
+
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "sensor_msgs/msg/camera_info.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
-
-#include "nav2_depth_costmap/depth_model/DepthModel.hpp"
-#include "nav2_depth_costmap/ImagePreprocessor.hpp"
-#include "nav2_depth_costmap/PointCloudGenerator.hpp"
 
 namespace nav2_depth_costmap
 {

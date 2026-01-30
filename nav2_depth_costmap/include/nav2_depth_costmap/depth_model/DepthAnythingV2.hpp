@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NAV2_DEPTH_COSTMAP__DEPTH_MODEL__ONNXDEPTHMODEL_HPP_
-#define NAV2_DEPTH_COSTMAP__DEPTH_MODEL__ONNXDEPTHMODEL_HPP_
-
-#include <onnxruntime_cxx_api.h>
+#ifndef NAV2_DEPTH_COSTMAP__DEPTH_MODEL__DEPTHANYTHINGV2_HPP_
+#define NAV2_DEPTH_COSTMAP__DEPTH_MODEL__DEPTHANYTHINGV2_HPP_
 
 #include <memory>
 #include <string>
 #include <vector>
 
+#include <onnxruntime_cxx_api.h>
 #include "opencv2/opencv.hpp"
 
 #include "nav2_depth_costmap/depth_model/DepthModel.hpp"
@@ -29,15 +28,15 @@ namespace nav2_depth_costmap
 {
 
 /**
- * @class OnnxDepthModel
- * @brief ONNX Runtime implementation of the DepthModel interface.
+ * @class DepthAnythingV2
+ * @brief Depth Anything V2 depth estimation model implementation of the DepthModel interface.
  *
- * This class loads and runs depth estimation models in ONNX format.
+ * This class loads and runs Depth Anything V2 model in ONNX format.
  * It supports any model that follows the standard input/output format:
  * - Input: [1, 3, H, W] float32 tensor (normalized RGB)
  * - Output: [1, 1, H, W] or [1, H, W] float32 tensor (relative depth)
  */
-class OnnxDepthModel : public DepthModel {
+class DepthAnythingV2 : public DepthModel {
 public:
   /**
    * @brief Constructor
@@ -45,9 +44,9 @@ public:
    * @param input_height Expected input height for the model
    * @param use_gpu Whether to use GPU acceleration (CUDA)
    */
-  explicit OnnxDepthModel(int input_width = 518, int input_height = 518, bool use_gpu = true);
+  explicit DepthAnythingV2(int input_width = 518, int input_height = 518, bool use_gpu = true);
 
-  ~OnnxDepthModel() override = default;
+  ~DepthAnythingV2() override = default;
 
   bool load(const std::string & model_path) override;
   bool isReady() const override;
@@ -102,4 +101,4 @@ private:
 
 }  // namespace nav2_depth_costmap
 
-#endif  // NAV2_DEPTH_COSTMAP__DEPTH_MODEL__ONNXDEPTHMODEL_HPP_
+#endif  // NAV2_DEPTH_COSTMAP__DEPTH_MODEL__DEPTHANYTHINGV2_HPP_
