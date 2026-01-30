@@ -45,9 +45,9 @@ bool DepthAnythingV2::load(const std::string & model_path) {
         OrtCUDAProviderOptions cuda_options;
         cuda_options.device_id = 0;
         session_options_->AppendExecutionProvider_CUDA(cuda_options);
-        std::cout << "[OnnxDepthModel] Using CUDA execution provider" << std::endl;
+        std::cout << "[DepthAnythingV2] Using CUDA execution provider" << std::endl;
       } catch (const Ort::Exception & e) {
-        std::cout << "[OnnxDepthModel] CUDA not available, falling back to CPU: "
+        std::cout << "[DepthAnythingV2] CUDA not available, falling back to CPU: "
                   << e.what() << std::endl;
       }
     }
@@ -86,8 +86,8 @@ bool DepthAnythingV2::load(const std::string & model_path) {
     }
 
     is_ready_ = true;
-    std::cout << "[OnnxDepthModel] Model loaded: " << model_name_ << std::endl;
-    std::cout << "[OnnxDepthModel] Input: " << input_name_ << " shape: [";
+    std::cout << "[DepthAnythingV2] Model loaded: " << model_name_ << std::endl;
+    std::cout << "[DepthAnythingV2] Input: " << input_name_ << " shape: [";
     for (size_t i = 0; i < input_shape_.size(); ++i) {
       std::cout << input_shape_[i];
       if (i < input_shape_.size() - 1) std::cout << ", ";
@@ -96,7 +96,7 @@ bool DepthAnythingV2::load(const std::string & model_path) {
 
     return true;
   } catch (const Ort::Exception & e) {
-    std::cerr << "[OnnxDepthModel] Failed to load model: " << e.what() << std::endl;
+    std::cerr << "[DepthAnythingV2] Failed to load model: " << e.what() << std::endl;
     is_ready_ = false;
     return false;
   }
